@@ -1,7 +1,8 @@
 import propTypes from "prop-types";
 import css from "./Options.module.css";
+import { GOOD, NEUTRAL, BAD, RESET } from "../../consts.js";
 
-const buttonTypes = ["good", "neutral", "bad", "reset"];
+const buttonTypes = [GOOD, NEUTRAL, BAD, RESET];
 
 const Options = ({ handleFeedback }) => {
   return (
