@@ -4,13 +4,19 @@ import Description from "./components/Description/Description.jsx";
 import Feedback from "./components/Feedback/Feedback.jsx";
 import Options from "./components/Options/Options.jsx";
 import { RESET, FEEDBACK_KEY } from "./consts.js";
-import { addToLS, getFromLS } from "./helpers";
+import {
+  addToLS,
+  getFromLS,
+  getPositiveFeedback,
+  getTotalFeedback,
+} from "./helpers";
 
 const defaultValue = {
   good: 0,
   neutral: 0,
   bad: 0,
 };
+
 function App() {
   const [feedback, setFeedback] = useState(
     getFromLS(FEEDBACK_KEY) || defaultValue
@@ -26,10 +32,8 @@ function App() {
     addToLS(FEEDBACK_KEY, updatedFeedback);
   };
 
-  const totalFeedback = Object.values(feedback).reduce((acc, i) => acc + i, 0);
-  const positiveFeedback =
-    feedback.good + feedback.neutral &&
-    Math.round(((feedback.good + feedback.neutral) / totalFeedback) * 100);
+  const totalFeedback = getTotalFeedback(feedback);
+  const positiveFeedback = getPositiveFeedback(feedback, totalFeedback);
 
   console.log(totalFeedback);
   return (
