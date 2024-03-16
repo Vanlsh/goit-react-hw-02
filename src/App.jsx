@@ -4,7 +4,7 @@ import Description from "./components/Description/Description.jsx";
 import Feedback from "./components/Feedback/Feedback.jsx";
 import Options from "./components/Options/Options.jsx";
 import Notification from "./components/Notification/Notification.jsx";
-import { RESET, FEEDBACK_KEY } from "./consts.js";
+import { FEEDBACK_KEY } from "./consts.js";
 import {
   addToLS,
   getFromLS,
@@ -27,13 +27,10 @@ function App() {
     addToLS(FEEDBACK_KEY, feedback);
   }, [feedback]);
 
-  const updateFeedback = (feedbackType) => {
-    const updatedFeedback =
-      feedbackType === RESET
-        ? defaultValue
-        : { ...feedback, [feedbackType]: feedback[feedbackType] + 1 };
-    setFeedback(updatedFeedback);
-  };
+  const updateFeedback = (feedbackType) =>
+    setFeedback({ ...feedback, [feedbackType]: feedback[feedbackType] + 1 });
+
+  const handleResetFeedback = () => setFeedback(defaultValue);
 
   const totalFeedback = getTotalFeedback(feedback);
   const positiveFeedback = getPositiveFeedback(feedback, totalFeedback);
@@ -41,7 +38,11 @@ function App() {
   return (
     <Container>
       <Description />
-      <Options updateFeedback={updateFeedback} total={totalFeedback} />
+      <Options
+        updateFeedback={updateFeedback}
+        handleResetFeedback={handleResetFeedback}
+        total={totalFeedback}
+      />
       {totalFeedback ? (
         <Feedback
           good={feedback.good}

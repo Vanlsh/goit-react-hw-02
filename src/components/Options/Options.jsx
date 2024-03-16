@@ -1,11 +1,11 @@
 import propTypes from "prop-types";
 import css from "./Options.module.css";
 import clsx from "clsx";
-import { GOOD, NEUTRAL, BAD, RESET } from "../../consts.js";
+import { GOOD, NEUTRAL, BAD } from "../../consts.js";
 
 const buttonTypes = [GOOD, NEUTRAL, BAD];
 
-const Options = ({ updateFeedback, total }) => {
+const Options = ({ updateFeedback, handleResetFeedback, total }) => {
   return (
     <ul className={css.list}>
       {buttonTypes.map((item) => (
@@ -15,7 +15,7 @@ const Options = ({ updateFeedback, total }) => {
       ))}
       {!!total && (
         <li className={clsx(css.listItem, css.resetButton)}>
-          <button onClick={() => updateFeedback(RESET)}>{RESET}</button>
+          <button onClick={() => handleResetFeedback()}>reset</button>
         </li>
       )}
     </ul>
@@ -23,7 +23,8 @@ const Options = ({ updateFeedback, total }) => {
 };
 
 Options.propTypes = {
-  handleFeedback: propTypes.func.isRequired,
+  updateFeedback: propTypes.func.isRequired,
+  handleResetFeedback: propTypes.func.isRequired,
   total: propTypes.number,
 };
 
