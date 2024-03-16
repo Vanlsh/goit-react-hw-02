@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Container from "./components/Container/Container.jsx";
 import Description from "./components/Description/Description.jsx";
 import Feedback from "./components/Feedback/Feedback.jsx";
 import Options from "./components/Options/Options.jsx";
+import Notification from "./components/Notification/Notification.jsx";
 import { RESET, FEEDBACK_KEY } from "./consts.js";
 import {
   addToLS,
@@ -19,27 +20,28 @@ const defaultValue = {
 
 function App() {
   const [feedback, setFeedback] = useState(
-    getFromLS(FEEDBACK_KEY) || defaultValue
+    getFromLS(FEEDBACK_KEY) ?? defaultValue
   );
+
+  useEffect(() => {
+    addToLS(FEEDBACK_KEY, feedback);
+  }, [feedback]);
 
   const handleFeedback = (type) => {
     const updatedFeedback =
       type === RESET
-        ? { ...defaultValue }
+        ? defaultValue
         : { ...feedback, [type]: feedback[type] + 1 };
-
     setFeedback(updatedFeedback);
-    addToLS(FEEDBACK_KEY, updatedFeedback);
   };
 
   const totalFeedback = getTotalFeedback(feedback);
   const positiveFeedback = getPositiveFeedback(feedback, totalFeedback);
 
-  console.log(totalFeedback);
   return (
     <Container>
       <Description />
-      <Options handleFeedback={handleFeedback} />
+      <Options handleFeedback={handleFeedback} total={totalFeedback} />
       {totalFeedback ? (
         <Feedback
           good={feedback.good}
@@ -49,7 +51,7 @@ function App() {
           positive={positiveFeedback}
         />
       ) : (
-        <p>No feedback yet</p>
+        <Notification />
       )}
     </Container>
   );
