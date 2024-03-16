@@ -17,13 +17,7 @@
   color: var(--color-white);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-.listItem:last-child button:disabled {
-  pointer-events: none;
-  background-color: var(--color-light);
-  color: var(--color-gray);
-}
-.listItem:last-child button {
+.resetButton button {
   background-color: var(--color-green);
   color: var(--color-white);
 }
@@ -34,17 +28,17 @@
   background-color: transparent;
 }
 
-.listItem:last-child button:hover {
+.resetButton button:hover {
   border: solid 1px var(--color-green);
   color: var(--color-green);
 }
 
-.listItem:last-child {
+.resetButton {
   margin-left: auto;
 }
 
 @media screen and (max-width: 375px) {
-  .listItem:last-child {
+  .resetButton {
     margin-left: 0;
   }
 }

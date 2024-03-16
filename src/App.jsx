@@ -27,11 +27,11 @@ function App() {
     addToLS(FEEDBACK_KEY, feedback);
   }, [feedback]);
 
-  const handleFeedback = (type) => {
+  const updateFeedback = (feedbackType) => {
     const updatedFeedback =
-      type === RESET
+      feedbackType === RESET
         ? defaultValue
-        : { ...feedback, [type]: feedback[type] + 1 };
+        : { ...feedback, [feedbackType]: feedback[feedbackType] + 1 };
     setFeedback(updatedFeedback);
   };
 
@@ -41,7 +41,7 @@ function App() {
   return (
     <Container>
       <Description />
-      <Options handleFeedback={handleFeedback} total={totalFeedback} />
+      <Options updateFeedback={updateFeedback} total={totalFeedback} />
       {totalFeedback ? (
         <Feedback
           good={feedback.good}
